@@ -20,7 +20,7 @@ class PageController extends Controller
 {
     public function __construct(){
         $this->middleware('datatable_adapters')->only(['index']);
-//        $this->middleware('auth.rest')->only(['store','update','destroy']);
+//        $this->middleware('auth:auth')->only(['store','update','destroy']);
     }
     public function index(){
 
