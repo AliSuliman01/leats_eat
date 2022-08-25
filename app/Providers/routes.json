@@ -1,0 +1,11 @@
+[
+    "routes/api.php",
+    "routes/Categories/Categories/categories.php",
+    "routes/Languages/languages.php",
+    "routes/Server/server.php",
+    "routes/Users/Users/users.php",
+    "routes/Users/Roles/roles.php",
+    "routes/Users/Activities/ActivityTypes/ActivityTypes/activity_types.php",
+    "routes/Users/Activities/Browsers/Browsers/browsers.php",
+    "routes/Users/Activities/Platforms/Platforms/platforms.php"
+]
