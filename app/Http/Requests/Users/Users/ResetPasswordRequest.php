@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Users\Users;
 
-
 use App\Http\Requests\ApiFormRequest;
 
-class UserLogInRequest extends ApiFormRequest
+class ResetPasswordRequest extends ApiFormRequest
 {
+
     public function rules()
     {
         return [
@@ -14,4 +14,5 @@ class UserLogInRequest extends ApiFormRequest
             'password' => 'required',
         ];
     }
+
 }

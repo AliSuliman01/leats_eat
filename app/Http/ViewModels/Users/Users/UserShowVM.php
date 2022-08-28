@@ -17,8 +17,8 @@ class UserShowVM implements Arrayable
                 $this->user = User::find($user->id);
             elseif ($user->email !== null)
                 $this->user = User::where('email', $user->email)->first();
-            else
-                $this->user = User::where('phone_number', $user->phone_number)->first();
+//            else
+//                $this->user = User::where('phone_number', $user->phone_number)->first();
         }
     }
 

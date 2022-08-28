@@ -10,8 +10,9 @@ class UserSignUpRequest extends ApiFormRequest
     {
         return [
             'name' => 'required|string',
-            'id_token' => 'required|email|unique:users,email,null,id,deleted_at,NULL',
+            'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
+            'role_name' => 'required'
         ];
     }
 }

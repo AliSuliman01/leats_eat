@@ -7,10 +7,11 @@
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
+        "jenssegers/agent": "3.0.x-dev",
         "laravel/framework": "^9.19",
+        "laravel/passport": "^11.0",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "jenssegers/agent": "3.0.x-dev",
         "spatie/data-transfer-object": "^3.7",
         "yajra/laravel-datatables-oracle": "^9.18"
     },
