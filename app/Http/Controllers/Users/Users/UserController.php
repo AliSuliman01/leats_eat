@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Users\Users;
 
+use App\Domain\Users\Users\Actions\ChangePasswordActions;
+use App\Domain\Users\Users\Actions\ResetPasswordActions;
 use App\Domain\Users\Users\Actions\UserStoreAction;
 use App\Domain\Users\Users\Model\User;
 use App\Helpers\Response;
@@ -14,14 +16,11 @@ use App\Http\Requests\Users\Users\UserSignUpRequest;
 use App\Http\ViewModels\Users\Users\UserIndexVM;
 use App\Http\ViewModels\Users\Users\UserShowVM;
 use App\Notifications\MailNotification;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Notification;
+
 
 class UserController extends Controller
 {
@@ -38,13 +37,7 @@ class UserController extends Controller
         $data = $request->validated();
         $userDTO = UserDTO::fromRequest($data);
         $user = UserStoreAction::execute($userDTO);
-
         // TODO: send sms or gmail verification message
-
-
-        $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
-        $user->setAttribute('token', $token->accessToken);
-
         return response()->json(Response::success($user), 200);
     }
 
@@ -69,20 +62,16 @@ class UserController extends Controller
 
     public function change_password(ChangePasswordRequest $request)
     {
-
         $user = (new UserShowVM(UserDTO::fromRequest($request->validated())))->toArray();
-
-            $random = rand(100000, 999999);
-            $arr = [
-                'title' => 'Hi',
-                'body' => 'The verification code is : ',
-                'code' => $random,
-                'lastLine' => 'Thanks'
-            ];
-
-            Notification::route('mail', $request->email)->notify(new MailNotification($arr));
-            return response()->json(Response::success($arr));
-
+        $random = rand(100000, 999999);
+        $arr = [
+            'title' => 'Hi',
+            'body' => 'The verification code is : ',
+            'code' => $random,
+            'lastLine' => 'Thanks'
+        ];
+        Notification::route('mail', $request->email)->notify(new MailNotification($arr));
+        return response()->json(Response::success($arr));
     }
 
     public function reset_password(ResetPasswordRequest $request)
@@ -90,8 +79,8 @@ class UserController extends Controller
         $user = (new UserShowVM(UserDTO::fromRequest($request->validated())))->toArray();
         $user['password'] = Hash::make($request->password);
         $user->update();
-        return response()->json(Response::success("Reset Password is Success"));
-}
+        return response()->json(Response::success($user));
+    }
 
     public function update(){
 
