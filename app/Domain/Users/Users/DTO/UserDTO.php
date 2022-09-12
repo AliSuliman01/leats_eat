@@ -38,9 +38,19 @@ class UserDTO extends DataTransferObject
      * @var string|null
      */
     public $role_name;
+        /**
+     * @var string|null
+     */
+    public $token;
+
+           /**
+     * @var string|null
+     */
+    public $avatar;
 
     public static function fromRequest($request){
         return new self([
+            
             'id'=> $request['id'] ?? null,
             'name'=> $request['name'] ?? null,
             'email'=> $request['email'] ?? null,
@@ -49,6 +59,8 @@ class UserDTO extends DataTransferObject
             'password'=> $request['password'] ?? null,
             'remember_token'=> $request['remember_token'] ?? null,
             'role_name' => $request['role_name'] ?? null,
+            'token' =>  $request->token ?? null,
+            'avatar' =>  $request->avatar ?? null,
 
         ]);
     }

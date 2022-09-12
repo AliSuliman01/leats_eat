@@ -27,15 +27,18 @@ use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return response()->json(Response::success((new UserIndexVM())->toArray()));
     }
 
-    public function show(User $user){
+    public function show(User $user)
+    {
         return response()->json(Response::success((new UserShowVM($user))->toArray()));
     }
 
-    public function sign_up(UserSignUpRequest $request){
+    public function sign_up(UserSignUpRequest $request)
+    {
 
         $data = $request->validated();
         $userDTO = UserDTO::fromRequest($data);
@@ -44,19 +47,20 @@ class UserController extends Controller
         // TODO: send sms or gmail verification message
 
 
-        $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
+        $token = $user->createToken('personal access token', $user->arrayOfRoles() ?? []);
         $user->setAttribute('token', $token->accessToken);
 
         return response()->json(Response::success($user), 200);
     }
 
-    public function log_in(UserLogInRequest $request){
+    public function log_in(UserLogInRequest $request)
+    {
         $user = (new UserShowVM(UserDTO::fromRequest($request->validated())))->toArray();
 
-        if(!Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+        if (!Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             return response()->json(Response::error('invalid Email Or Password'));
         }
-        $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
+        $token = $user->createToken('personal access token', $user->arrayOfRoles() ?? []);
         $user->setAttribute('token', $token->accessToken);
         return response()->json(Response::success($user));
     }
@@ -74,17 +78,16 @@ class UserController extends Controller
 
         $user = (new UserShowVM(UserDTO::fromRequest($request->validated())))->toArray();
 
-            $random = rand(100000, 999999);
-            $arr = [
-                'title' => 'Hi',
-                'body' => 'The verification code is : ',
-                'code' => $random,
-                'lastLine' => 'Thanks'
-            ];
+        $random = rand(100000, 999999);
+        $arr = [
+            'title' => 'Hi',
+            'body' => 'The verification code is : ',
+            'code' => $random,
+            'lastLine' => 'Thanks'
+        ];
 
-            Notification::route('mail', $request->email)->notify(new MailNotification($arr));
-            return response()->json(Response::success($arr));
-
+        Notification::route('mail', $request->email)->notify(new MailNotification($arr));
+        return response()->json(Response::success($arr));
     }
 
     public function reset_password(ResetPasswordRequest $request)
@@ -93,14 +96,14 @@ class UserController extends Controller
         $user['password'] = Hash::make($request->password);
         $user->update();
         return response()->json(Response::success("Reset Password is Success"));
-}
-
-    public function update(){
-
     }
 
-    public function destroy(){
+    public function update()
+    {
+    }
 
+    public function destroy()
+    {
     }
 
 
@@ -131,7 +134,6 @@ class UserController extends Controller
         $user = Socialite::driver('facebook')->stateless()->user();
         $user = $this->_registerOrLoginUser($user);
         return response()->json(Response::success($user));
-
     }
 
 
@@ -140,25 +142,13 @@ class UserController extends Controller
 
         $user = User::where('email', '=', $data->email)->first();
 
-        if (!$user){
+        if (!$user) {
             $userDTO = UserDTO::fromRequest($data);
             $user = UserStoreAction::execute($userDTO);
-    }
-
-        $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
-        $user->setAttribute('token',  $token->accessToken);
-//        if (!$user) {
-//            $user = new User();
-//            $user->id = ($data->id);
-//            $user->name = $data->name;
-//            $user->email = $data->email;
-//            $user->role_name = 'user';
-//            $user->save();
-//
-//            $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
-//            $user->setAttribute('token',  $token->accessToken);
-//
-//        }
+        }
+        
+        // $user->setAttribute('image', $data->avatar);
+        // $user->setAttribute('token',  $data->token);
         Auth::login($user);
         return $user;
     }
