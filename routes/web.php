@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Route::controller(\App\Http\Controllers\Users\Users\UserController::class)->prefix('users')->group(function(){
+//// Google login
+//Route::get('login/google', 'redirectToGoogle');
+//Route::get('login/google/callback', 'handleGoogleCallback');
+//
+//// Facebook login
+//    Route::get('login/facebook','redirectToFacebook');
+//    Route::get('login/facebook/callback', 'handleFacebookCallback');
+//
+//});

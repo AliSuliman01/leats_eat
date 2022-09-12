@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Domain\Users\Users\DTO\UserDTO;
 use App\Http\Requests\Users\Users\ChangePasswordRequest;
 use App\Http\Requests\Users\Users\ResetPasswordRequest;
+use App\Http\Requests\Users\Users\SocialRequest;
 use App\Http\Requests\Users\Users\UserLogInRequest;
 use App\Http\Requests\Users\Users\UserSignUpRequest;
 use App\Http\ViewModels\Users\Users\UserIndexVM;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class UserController extends Controller
 {
@@ -60,14 +62,14 @@ class UserController extends Controller
     }
 
 
-    public function logout(Request $request)
+    public function logout(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->user()->token()->revoke();
         return response()->json(Response::success("Logout Success"));
     }
 
 
-    public function change_password(ChangePasswordRequest $request)
+    public function change_password(ChangePasswordRequest $request): \Illuminate\Http\JsonResponse
     {
 
         $user = (new UserShowVM(UserDTO::fromRequest($request->validated())))->toArray();
@@ -99,5 +101,65 @@ class UserController extends Controller
 
     public function destroy(){
 
+    }
+
+
+
+    // Google login
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->stateless()->redirect();
+    }
+
+    // Google callback
+    public function handleGoogleCallback()
+    {
+        $user = Socialite::driver('google')->stateless()->user();
+        $user = $this->_registerOrLoginUser($user);
+        return response()->json(Response::success($user));
+    }
+
+    // Facebook login
+    public function redirectToFacebook()
+    {
+        return Socialite::driver('facebook')->stateless()->redirect();
+    }
+
+    // Facebook callback
+    public function handleFacebookCallback()
+    {
+        $user = Socialite::driver('facebook')->stateless()->user();
+        $user = $this->_registerOrLoginUser($user);
+        return response()->json(Response::success($user));
+
+    }
+
+
+    protected function _registerOrLoginUser($data)
+    {
+
+        $user = User::where('email', '=', $data->email)->first();
+
+        if (!$user){
+            $userDTO = UserDTO::fromRequest($data);
+            $user = UserStoreAction::execute($userDTO);
+    }
+
+        $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
+        $user->setAttribute('token',  $token->accessToken);
+//        if (!$user) {
+//            $user = new User();
+//            $user->id = ($data->id);
+//            $user->name = $data->name;
+//            $user->email = $data->email;
+//            $user->role_name = 'user';
+//            $user->save();
+//
+//            $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
+//            $user->setAttribute('token',  $token->accessToken);
+//
+//        }
+        Auth::login($user);
+        return $user;
     }
 }

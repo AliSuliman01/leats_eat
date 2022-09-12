@@ -14,7 +14,7 @@ class AddRoleNameToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('role_name');
+            $table->string('role_name')->nullable();
             $table->foreign('role_name')->references('name')->on('roles')->cascadeOnDelete();
         });
     }
