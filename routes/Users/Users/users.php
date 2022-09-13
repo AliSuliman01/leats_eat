@@ -20,5 +20,5 @@ Route::controller(UserController::class)->prefix('users')->group(function(){
 
 
 
-   Route::get('', 'index');
+   Route::get('', 'index')->middleware('auth:socialite');
 });

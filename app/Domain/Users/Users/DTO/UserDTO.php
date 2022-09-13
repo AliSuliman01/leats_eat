@@ -41,7 +41,7 @@ class UserDTO extends DataTransferObject
         /**
      * @var string|null
      */
-    public $token;
+    public $api_token;
 
            /**
      * @var string|null
@@ -59,7 +59,7 @@ class UserDTO extends DataTransferObject
             'password'=> $request['password'] ?? null,
             'remember_token'=> $request['remember_token'] ?? null,
             'role_name' => $request['role_name'] ?? null,
-            'token' =>  $request->token ?? null,
+            'api_token' =>  $request->token ?? null,
             'avatar' =>  $request->avatar ?? null,
 
         ]);

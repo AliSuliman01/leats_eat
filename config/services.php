@@ -40,13 +40,8 @@ return [
     'facebook' => [
         'client_id' => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
-        'redirect' => 'http://localhost:8000/api/v1/users/login/facebook/callback',
+        'redirect' => env('FACEBOOK_REDIRECT'),
     ],
 
-    'github' => [
-        'client_id' => env('GITHUB_CLIENT_ID'),
-        'client_secret' => env('GITHUB_CLIENT_SECRET'),
-        'redirect' => 'http://localhost/laravel-socialite/public/login/github/callback',
-    ],
 
 ];
