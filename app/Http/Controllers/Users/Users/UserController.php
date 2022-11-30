@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Users\Users;
 
+use App\Domain\Users\Users\Actions\ChangePasswordActions;
+use App\Domain\Users\Users\Actions\ResetPasswordActions;
 use App\Domain\Users\Users\Actions\UserStoreAction;
 use App\Domain\Users\Users\Model\User;
 use App\Helpers\Response;
@@ -61,20 +63,16 @@ class UserController extends Controller
 
     public function change_password(ChangePasswordRequest $request)
     {
-
         $user = (new UserShowVM(UserDTO::fromRequest($request->validated())))->toArray();
-
-            $random = rand(100000, 999999);
-            $arr = [
-                'title' => 'Hi',
-                'body' => 'The verification code is : ',
-                'code' => $random,
-                'lastLine' => 'Thanks'
-            ];
-
-            Notification::route('mail', $request->email)->notify(new MailNotification($arr));
-            return response()->json(Response::success($arr));
-
+        $random = rand(100000, 999999);
+        $arr = [
+            'title' => 'Hi',
+            'body' => 'The verification code is : ',
+            'code' => $random,
+            'lastLine' => 'Thanks'
+        ];
+        Notification::route('mail', $request->email)->notify(new MailNotification($arr));
+        return response()->json(Response::success($arr));
     }
 
     public function reset_password(ResetPasswordRequest $request)
@@ -82,7 +80,7 @@ class UserController extends Controller
         $user = (new UserShowVM(UserDTO::fromRequest($request->validated())))->toArray();
         $user['password'] = Hash::make($request->password);
         $user->update();
-        return response()->json(Response::success("Reset Password is Success"));
+        return response()->json(Response::success($user));
     }
 
     public function update(){

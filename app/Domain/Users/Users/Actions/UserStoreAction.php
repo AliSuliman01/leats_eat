@@ -12,6 +12,8 @@ class UserStoreAction
         $user = new User($userDTO->toArray());
         $user->password = Hash::make($userDTO->password);
         $user->save();
+        $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
+        $user->setAttribute('token', $token->accessToken);
         return $user;
     }
 }
