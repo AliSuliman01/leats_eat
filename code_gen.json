@@ -1,0 +1,18 @@
+{
+    "tables": [
+        {
+            "table_name": "contents",
+            "entity_name": "Content",
+            "instance_name": "content",
+            "base_path": "Contents",
+            "operation": "crud",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer",
+                    "validation_rules": "required"
+                }
+            ]
+        }
+    ]
+}

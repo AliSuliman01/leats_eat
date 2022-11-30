@@ -14,14 +14,10 @@ use App\Http\Requests\Users\Users\UserSignUpRequest;
 use App\Http\ViewModels\Users\Users\UserIndexVM;
 use App\Http\ViewModels\Users\Users\UserShowVM;
 use App\Notifications\MailNotification;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -38,9 +34,6 @@ class UserController extends Controller
         $data = $request->validated();
         $userDTO = UserDTO::fromRequest($data);
         $user = UserStoreAction::execute($userDTO);
-
-        // TODO: send sms or gmail verification message
-
 
         $token = $user->createToken('personal access token',$user->arrayOfRoles() ?? []);
         $user->setAttribute('token', $token->accessToken);
@@ -66,7 +59,6 @@ class UserController extends Controller
         return response()->json(Response::success("Logout Success"));
     }
 
-
     public function change_password(ChangePasswordRequest $request)
     {
 
@@ -91,7 +83,7 @@ class UserController extends Controller
         $user['password'] = Hash::make($request->password);
         $user->update();
         return response()->json(Response::success("Reset Password is Success"));
-}
+    }
 
     public function update(){
 

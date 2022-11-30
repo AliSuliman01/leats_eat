@@ -14,9 +14,8 @@ class CreateLanguagesTable extends Migration
     public function up()
     {
         Schema::create('languages', function (Blueprint $table) {
-            $table->id();
+            $table->string('language_code')->primary();
             $table->string('name');
-            $table->string('abbrev')->nullable();
             $table->foreignId('created_by_user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('updated_by_user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('deleted_by_user_id')->nullable()->constrained('users')->cascadeOnDelete();

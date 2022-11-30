@@ -16,6 +16,7 @@
         "yajra/laravel-datatables-oracle": "^9.18"
     },
     "require-dev": {
+        "alisuliman/code_generator": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
@@ -64,6 +65,12 @@
             "pestphp/pest-plugin": true
         }
     },
+    "repositories":[
+        {
+            "type": "vcs",
+            "url": "git@github.com:AliSuliman01/code_gen.git"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }

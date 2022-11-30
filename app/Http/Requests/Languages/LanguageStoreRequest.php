@@ -12,8 +12,7 @@ class LanguageStoreRequest extends ApiFormRequest
     {
         return [
             'name' 		=> 'required|unique:languages,name,NULL,id,deleted_at,NULL' ,
-			'abbrev' 	=> 'required|unique:languages,name,NULL,id,deleted_at,NULL' ,
-
+			'language_code' 	=> 'required' ,
         ];
     }
 }

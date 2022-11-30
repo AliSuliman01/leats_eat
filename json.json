@@ -1,0 +1,60 @@
+{
+    "tables": [
+        {
+            "table_name": "currencies",
+            "entity_name": "Currency",
+            "base_path": "Currencies\\Currencies",
+            "operation": "crud",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer"
+                },
+                {
+                    "name": "code",
+                    "type": "string"
+                },
+                {
+                    "name": "equivalent_to_main_currency",
+                    "type": "double"
+                },
+                {
+                    "name": "is_main",
+                    "type": "integer"
+                }
+            ]
+        },
+        {
+            "table_name": "currency_translations",
+            "entity_name": "CurrencyTranslation",
+            "base_path": "Currencies\\CurrencyTranslations",
+            "operation": "crud",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "integer"
+                },
+                {
+                    "name": "language_code",
+                    "type": "string"
+                },
+                {
+                    "name": "currency_id",
+                    "type": "integer"
+                },
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "name": "notes",
+                    "type": "string"
+                }
+            ]
+        }
+    ]
+}

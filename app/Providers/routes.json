@@ -1,11 +1,1 @@
-[
-    "routes/api.php",
-    "routes/Categories/Categories/categories.php",
-    "routes/Languages/languages.php",
-    "routes/Server/server.php",
-    "routes/Users/Users/users.php",
-    "routes/Users/Roles/roles.php",
-    "routes/Users/Activities/ActivityTypes/ActivityTypes/activity_types.php",
-    "routes/Users/Activities/Browsers/Browsers/browsers.php",
-    "routes/Users/Activities/Platforms/Platforms/platforms.php"
-]
+["routes/api.php","routes/Categories/Categories/categories.php","routes/Languages/languages.php","routes/Server/server.php","routes/Users/Users/users.php","routes/Users/Roles/roles.php","routes/Users/Activities/ActivityTypes/ActivityTypes/activity_types.php","routes/Users/Activities/Browsers/Browsers/browsers.php","routes/Users/Activities/Platforms/Platforms/platforms.php","routes/Ingredients/Ingredients/ingredients.php","routes/Ingredients/IngredientTranslation/ingredient_translations.php","routes/Ingredients/IngredientImages/ingredient_images.php","routes/Ingredients/IngredientCategories/ingredient_category.php","routes/UserStores/user_stores.php","routes/Currencies/Currencies/currencies.php","routes/Currencies/CurrencyTranslations/currency_translations.php","routes/Contents/contents.php"]

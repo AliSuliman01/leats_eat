@@ -3,4 +3,4 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Languages\LanguageController;
 
-Route::apiResource('languages',LanguageController::class);
+Route::apiResource('language:language_code',LanguageController::class);
